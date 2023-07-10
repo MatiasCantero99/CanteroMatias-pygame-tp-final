@@ -15,7 +15,6 @@ class Pokeball(pygame.sprite.Sprite):
         self.izquierda_presionada = False
         self.transform = False
         self.move = False
-        self.score = 0
         self.power_active = False
     
     def posicion(self):
@@ -31,15 +30,15 @@ class Pokeball(pygame.sprite.Sprite):
         self.speed_x = x
         self.speed_y = y
     
-    def power(self):
-        if self.score > 1500 and not self.power_active:
+    def power(self,score):
+        if score > 1500 and not self.power_active:
             if not self.izquierda:
                 self.image = pygame.transform.flip(pygame.transform.scale(pygame.image.load(r"sprite juego\superball.png"), (30, 30)).convert_alpha(),True,False)
                 self.power_active = True
             else:
                 self.image = pygame.transform.scale(pygame.image.load(r"sprite juego\superball.png"), (30, 30)).convert_alpha()
                 self.power_active = True
-        elif self.score < 1500 and self.power_active:
+        elif score < 1500 and self.power_active:
             self.image = pygame.transform.scale(pygame.image.load(r"sprite juego\pokeball.png"), (30, 30)).convert_alpha()
             self.power_active = False
 
@@ -51,5 +50,4 @@ class Pokeball(pygame.sprite.Sprite):
             self.rect.x += self.speed_x
         self.rect.y += self.speed_y
         self.posicion()
-        self.power()
         self.izquierda = False

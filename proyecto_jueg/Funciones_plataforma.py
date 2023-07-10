@@ -22,10 +22,10 @@ def generar_rects(principal,para):
     match para:
         case "player":
             diccionario["bottom"] = pygame.Rect(principal.left + 85, principal.bottom - 17, principal.width / 4, 10)
-            diccionario["left"] = pygame.Rect(principal.left + 60 , principal.top, 2,principal.height)
-            diccionario["right"] = pygame.Rect(principal.right -60, principal.top, 2,principal.height)
+            diccionario["left"] = pygame.Rect(principal.left + 75 , principal.top + 40, 2,principal.height - 50)
+            diccionario["right"] = pygame.Rect(principal.right -85, principal.top + 40, 2,principal.height - 50)
         case "boss":
-            diccionario["left"] = pygame.Rect(principal.left + 110 , principal.top, 2,principal.height)
+            diccionario["left"] = pygame.Rect(principal.left + 110 , principal.top + 60, 2,principal.height - 100)
         case "plataforma":
             diccionario["top"] = pygame.Rect(principal.left , principal.top, principal.width, 15)
     # match posicion:

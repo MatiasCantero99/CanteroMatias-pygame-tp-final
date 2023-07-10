@@ -9,7 +9,7 @@ def level_2(screen,clock):
 	flag_power = False
 	score = 0
 	contador = 120
-	lives = 3
+	contador_enemy = 0
 
 	poder = None
 	star_time = None
@@ -58,7 +58,7 @@ def level_2(screen,clock):
 		else:
 			player.modificar_velocidad(0)
 		
-		if score > poder_aleatorio and poder is None:
+		if contador_enemy > poder_aleatorio and poder is None:
 			poder = Poder(ALEATORIO_X,ALEATORIO_Y)
 			all_sprite_list.add(poder)
 			power_list.add(poder)
@@ -83,7 +83,8 @@ def level_2(screen,clock):
 			for enemies in enemies_hit_list:
 				all_sprite_list.remove(laser)
 				laser_list.remove(laser)
-				score += 1
+				score += 50
+				contador_enemy += 1
 			if laser.rect.y < -10:
 				all_sprite_list.remove(laser)
 				laser_list.remove(laser)
@@ -110,16 +111,13 @@ def level_2(screen,clock):
 		if player.lives > 0 or len(enemies_list) > 0:
 			screen.blit(fondo_escalar,(0,0))
 			escribir_pantalla(screen,"score: ","White",r"font\evil_spin\evilspinDEMO.otf",score,(0,0))
-			escribir_pantalla(screen,"lives: ","White",r"font\evil_spin\evilspinDEMO.otf",lives,(1000,0))
+			escribir_pantalla(screen,"lives: ","White",r"font\evil_spin\evilspinDEMO.otf",player.lives,(1000,0))
 			all_sprite_list.draw(screen)
 		if player.lives < 1:
-			screen.fill((0,0,0))
-			escribir_pantalla(screen,"you lose","Red",r"font\evil_spin\evilspinDEMO.otf",posicion=None)
-			return False
+			score = 0
+			return score,False
 		if len(enemies_list) < 1:
-			screen.fill((0,0,0))
-			escribir_pantalla(screen,"you win","Red",posicion=None)
-			return True
+			return score,True
 
 
 		clock.tick(FPS)

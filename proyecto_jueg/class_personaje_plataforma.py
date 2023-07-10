@@ -21,6 +21,7 @@ class Personaje(pygame.sprite.Sprite):
         self.contador = 0
         self.animacion_disparo = False
         self.cantidad_disparo = False
+        self.vivo = True
         self.vida = 10
         self.vida_anterior = 0
         #gravedad
@@ -38,6 +39,7 @@ class Personaje(pygame.sprite.Sprite):
         self.load_sprite()
         self.loop()
         self.aplicar_gravedad(plataforma_rectangulo)
+        self.verificar_animacion()
 
     def load_sprite(self):
         if self.izquierda:
@@ -136,48 +138,51 @@ class Personaje(pygame.sprite.Sprite):
             self.y += self.desplazamiento_y / 2
             if self.desplazamiento_y + self.gravedad < self.limite_caida and self.cayendo:
                 self.desplazamiento_y += self.gravedad
-        print(self.desplazamiento_y)
-        print(self.gravedad)
 
     def resetear_contador(self):
         if self.contador_plataformas >= 5:
             self.contador_plataformas = 0
 
-    def colision(self,rect):
+    def colision_disparo(self,rect):
         if rect.colliderect(self.rectangulo_player["left"]) or rect.colliderect(self.rectangulo_player["right"]):
             self.vida -= 1
+            self.nombre_animacion = "hit"
+            self.animacion_delay = 40
             if self.vida < 1:
                 self.vivo = False
+                self.nombre_animacion = "death"
+                self.animacion_delay = 40
             return True
         return False
 
-        # elif self.rectangulo_player["bottom"].colliderect(plataforma_rectangulo["top"]) and self.cayendo:
-        #     self.desplazamiento_y += 1
-        #     # print("entre")
-        #     self.y += self.desplazamiento_y / 2
-        #     if self.desplazamiento_y + self.gravedad < self.limite_caida:
-        #         self.desplazamiento_y += self.gravedad / 2
+    def colision_objeto(self,objeto_list,score):
+        flag = False
+        for objeto in objeto_list:
+            if objeto.rect.colliderect(self.rectangulo_player["left"]) or objeto.rect.colliderect(self.rectangulo_player["right"]):
+                if objeto.nombre == "ruby":
+                    score += 200
+                elif objeto.nombre == "ambar":
+                    score += 150
+                elif objeto.nombre == "veneno":
+                    self.vida -= 1
+                elif objeto.nombre == "key":
+                    score += 250
+                    flag = True
+                objeto.kill()
+        return score, flag
 
 
-        # if self.saltando:
-        #     if self.desplazamiento_y >= 0:
-        #         self.nombre_animacion = "fall"
-        #     self.y += self.desplazamiento_y / 2
-        #     self.desplazamiento_y += self.gravedad
-        # else:
-        #     self.y += self.desplazamiento_y / 2
-        #     if self.desplazamiento_y + self.gravedad < self.limite_caida:
-        #         self.desplazamiento_y += self.gravedad / 2
-        
-        # if self.rectangulo_player["bottom"][0] < plataforma_rectangulo["top"][0] -60 and self.rectangulo_player["bottom"][1] <= plataforma_rectangulo["top"][1] -11: #or self.rectangulo_player["bottom"][0] > plataforma_rectangulo["top"][0] +300:
-        #     if self.desplazamiento_y >= 0:
-        #         self.nombre_animacion = "fall"
-        #     self.y += self.desplazamiento_y / 2
-        #     if self.desplazamiento_y + self.gravedad < self.limite_caida:
-        #         self.desplazamiento_y += self.gravedad
-            # self.rect.bottom = plataforma_rectangulo["top"].top 
-            # self.rect.bottom = plataforma_rectangulo["top"]
-            # self.rectangulo_player["bottom"] = plataforma_rectangulo["top"].top 
-            # self.desplazamiento_y = 0
     
+    def verificar_animacion(self):
+        flag = False
+        if self.nombre_animacion == "hit":
+            if self.sprite_index == 3:
+                self.nombre_animacion = "idle"
+        elif self.nombre_animacion == "death":
+            if self.sprite_index == 6:
+                flag = True
+                self.kill()
+        return flag
 
+
+    

@@ -3,7 +3,7 @@ from constantes import *
 
 
 
-def escribir_pantalla(screen, texto,color,path,cantidad=".",posicion=None):
+def escribir_pantalla(screen, texto,color,path,cantidad="",posicion=None):
     font = pygame.font.Font(path, 50)
     text_lives = font.render(texto + "{0}".format(cantidad), True, color)
     if posicion is None:

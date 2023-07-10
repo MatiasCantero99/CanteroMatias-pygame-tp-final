@@ -12,6 +12,9 @@ pygame.init()
 screen = pygame.display.set_mode([SCREEN_WIDTH, SCREEN_HEIGHT])
 clock = pygame.time.Clock()
 image_fondo = pygame.transform.scale(pygame.image.load(r"sprite juego\background_bosque.jpg"),(1280,680)).convert_alpha()
+score = 0
+flag_termine = False
+boss_recompensa = 0
 #Grupo
 all_sprites_list = pygame.sprite.Group()
 plataforma_list = pygame.sprite.Group()
@@ -20,7 +23,6 @@ boss_list = pygame.sprite.Group()
 boss_disparo_list = pygame.sprite.Group()
 player_disparo_list = pygame.sprite.Group()
 object_coin_list = pygame.sprite.Group()
-object_poison_list = pygame.sprite.Group()
 enemy_list = pygame.sprite.Group()
 
 player = Personaje(50,475,DELAY,"idle",231,150,1,screen)
@@ -51,13 +53,17 @@ all_sprites_list.add(plataforma_1)
 all_sprites_list.add(plataforma_2)
 all_sprites_list.add(plataforma_3)
 
-coin = Objeto(plataforma_3.rect.centerx,plataforma_3.rect.centery - 33,pygame.transform.scale(pygame.image.load(r"Wizard Pack\coin\gem_amber__x1_iconic_png_1354831638.png"),(25,25)))
+coin = Objeto(plataforma_3.rect.centerx,plataforma_3.rect.centery - 33,pygame.transform.scale(pygame.image.load(r"Wizard Pack\coin\gem_amber__x1_iconic_png_1354831638.png").convert_alpha(),(25,25)),"ambar")
+object_coin_list.add(coin)
 all_sprites_list.add(coin)
-coin_1 = Objeto(plataforma_3.rect.centerx + 50,plataforma_3.rect.centery - 33,pygame.transform.scale(pygame.image.load(r"Wizard Pack\coin\gem_ruby__x1_iconic_png_1354831651.png"),(25,25)))
+coin_1 = Objeto(plataforma_3.rect.centerx + 50,plataforma_3.rect.centery - 33,pygame.transform.scale(pygame.image.load(r"Wizard Pack\coin\gem_ruby__x1_iconic_png_1354831651.png").convert_alpha(),(25,25)),"ruby")
+object_coin_list.add(coin_1)
 all_sprites_list.add(coin_1)
-poison = Objeto(plataforma_2.rect.centerx - 50,plataforma_2.rect.centery - 33,pygame.transform.scale(pygame.image.load(r"Wizard Pack\poison\poison.png"),(25,35)))
+poison = Objeto(plataforma_2.rect.centerx - 50,plataforma_2.rect.centery - 33,pygame.transform.scale(pygame.image.load(r"Wizard Pack\poison\poison.png").convert_alpha(),(25,35)),"veneno")
 all_sprites_list.add(poison)
-
+object_coin_list.add(poison)
+key = Objeto(1050,600,pygame.transform.scale(pygame.image.load(r"Wizard Pack\coin\key_0.png").convert_alpha(),(25,35)),"key")
+object_coin_list.add(key)
 image_escudo = pygame.transform.scale(pygame.image.load(r"sprite juego\escudo.png"),(310,310)).convert_alpha()
 running = True
 while running:
@@ -66,16 +72,17 @@ while running:
     for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
-            if event.type == pygame.MOUSEBUTTONDOWN and pygame.mouse.get_pressed()[0]:
-                player.mover("ataque",2)
-            elif event.type == pygame.MOUSEBUTTONUP:
-                player.ataque = False
-            if event.type == pygame.MOUSEBUTTONDOWN and pygame.mouse.get_pressed()[2]:
-                player.mover("defensa",2)
-            elif event.type == pygame.MOUSEBUTTONUP:
-                player.defensa = False
-                player.generar_escudo = False
-    if not player.ataque and not player.defensa:
+            if player.vivo:
+                if event.type == pygame.MOUSEBUTTONDOWN and pygame.mouse.get_pressed()[0]:
+                    player.mover("ataque",2)
+                elif event.type == pygame.MOUSEBUTTONUP:
+                    player.ataque = False
+                if event.type == pygame.MOUSEBUTTONDOWN and pygame.mouse.get_pressed()[2]:
+                    player.mover("defensa",2)
+                elif event.type == pygame.MOUSEBUTTONUP:
+                    player.defensa = False
+                    player.generar_escudo = False
+    if not player.ataque and not player.defensa and player.nombre_animacion != "hit" and player.vivo:
         if keys[pygame.K_d]:
             player.mover("derecha",3)
         elif keys[pygame.K_a]:
@@ -106,40 +113,45 @@ while running:
         if boss.vivo:
             flag = boss.colision(poder.rect)
             if flag:
-                all_sprites_list.remove(poder)
-                player_disparo_list.remove(poder)
+                poder.kill()
         enemy_hit = pygame.sprite.spritecollide(poder,enemy_list,False)
         for enemy in enemy_hit:
+            score += 150
             poder.kill()
             enemy.verifico_muerte()
             #enemy.vivo = False  #Puede ser un metodo
 
     all_sprites_list.update()
     all_sprites_list.draw(screen)
-    # print(player.contador_plataformas)
     for plataform in plataforma_list:
         player_list.update(plataform.rectangulo)
     player.resetear_contador()
-    pygame.sprite.spritecollide(player,boss_disparo_list,player.generar_escudo)
+
     
+    disparo_hit_list = pygame.sprite.spritecollide(player,boss_disparo_list,player.generar_escudo)
+    for disparo in disparo_hit_list:
+        flag = player.colision_disparo(disparo.rect)
+        if flag:
+            disparo.kill()
+    score,flag_termine = player.colision_objeto(object_coin_list,score)
+    print(score)
+    if flag_termine:
+        running = False
+    if len(boss_list) > 0:
+        boss_recompensa = boss.muerte()
+    else:
+        all_sprites_list.add(key)
+    if boss_recompensa != None:
+        score += boss_recompensa
+        boss_recompensa = None
     player_list.draw(screen)
     if player.generar_escudo:
         screen.blit(image_escudo,(player.rect.centerx - 120, player.rect.centery - 120))
-    if len(player_disparo_list) > 0:
-        for disparo in player_disparo_list:
-            pygame.draw.rect(screen,"sky blue",disparo.rect,1)
     escribir_pantalla(screen,"lives:","red",r"font\dominican\DOMISC__.TTF",posicion=(0,-20))
+    escribir_pantalla(screen,"score:","red",r"font\dominican\DOMISC__.TTF",score,posicion=(900,-20))
     draw_wizard_life(screen,130,0,player.vida,pygame.transform.scale(pygame.image.load(r"Wizard Pack\vida.png"),(40,40)).convert_alpha())
     # pygame.draw.rect(screen,"sky blue",enemy.rect,1)
-    pygame.draw.rect(screen,"orange",player.rectangulo_player["bottom"],1)
-    pygame.draw.rect(screen,"orange",player.rectangulo_player["left"],1)
-    pygame.draw.rect(screen,"orange",player.rectangulo_player["right"],1)
-    pygame.draw.rect(screen,"orange",plataforma.rectangulo["top"],1)
-    pygame.draw.rect(screen,"orange",plataforma_1.rectangulo["top"],1)
-    # pygame.draw.rect(screen,"orange",boss.rectangulo_boss["left"],1)
-    # print(plataforma_1.rectangulo["top"],"2")
-    # print(player.rectangulo_player["bottom"].colliderect(plataforma.rectangulo["top"]))
-    # print(player.rectangulo_player["bottom"].colliderect(plataforma_1.rectangulo["top"]))
+    # pygame.draw.rect(screen,"orange",player.rectangulo_player["bottom"],1)
     pygame.display.flip()
     clock.tick(FPS)
 

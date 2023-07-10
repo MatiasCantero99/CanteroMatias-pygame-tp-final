@@ -1,6 +1,7 @@
 import pygame
 from os.path import join, isfile
 from os import listdir
+from constantes import *
 
 def draw_pika_life(screen,x,y,cantidad,image):
         for i in range(cantidad):
@@ -43,15 +44,15 @@ def load_sprite_sheets(dir1, dir2, width, height,escalar, direction=False):
 
     return all_sprites
 
-def Text(screen,text,x,y,valor):
-    if valor == None:
-        font = pygame.font.Font(r"font\04b_30\04B_30__.TTF", 40)
-        text_lives = font.render(text, True, "yellow")
-        screen.blit(text_lives,(x,y))        
-    else:
-        font = pygame.font.Font(r"font\04b_30\04B_30__.TTF", 40)
-        text_lives = font.render(text+" {0}".format(valor), True, "yellow")
-        screen.blit(text_lives,(x,y))     
+def Text(screen,texto,color,path,cantidad="",posicion=None):
+    font = pygame.font.Font(path, 40)
+    text_lives = font.render(texto + "{0}".format(cantidad), True, color)
+    if posicion is None:
+        center = text_lives.get_rect(center=(SCREEN_WIDTH/2,SCREEN_HEIGHT/2))
+        screen.blit(text_lives,center)
+    elif posicion is not None:
+        screen.blit(text_lives,posicion)
+
 
 def generar_musica(path: str, volumen: float):
     '''

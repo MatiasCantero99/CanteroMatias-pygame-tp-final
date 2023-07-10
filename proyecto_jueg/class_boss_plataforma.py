@@ -2,6 +2,7 @@ import pygame
 from Funciones_laberinto import load_sprite_sheets
 from Funciones_plataforma import *
 from constantes import *
+from class_objeto_plataforma import *
 
 class Boss(pygame.sprite.Sprite):
     def __init__(self,x,y,delay,nombre,width,height,escalar,velocidad):
@@ -26,7 +27,6 @@ class Boss(pygame.sprite.Sprite):
         self.load_sprite()
         self.loop()
         self.mover()
-        self.muerte()
 
     def load_sprite(self):
             # self.rect = self.sprite[self.nombre_animacion + "_left"][0].get_rect(topleft=(self.x, self.y))
@@ -87,4 +87,6 @@ class Boss(pygame.sprite.Sprite):
             if self.sprite_index == 15:
                 self.kill()
                 self.rectangulo_boss["left"] = None
+                
+                return 500
 

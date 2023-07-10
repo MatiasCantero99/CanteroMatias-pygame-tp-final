@@ -38,6 +38,10 @@ def generar_laberinto(screen,muro_list,all_sprites_list,entei_list,objects_list,
                     goal_list.add(bulbasaur)
 
 def scape_juego(screen,clock):
+    score_global = 0
+    score_nivel_1 = 0
+    score_nivel_2 = 0
+    score_nivel_3 = 0
     #Grupo de sprites para laberinto
     all_sprites_list = pygame.sprite.Group()
     muro_list = pygame.sprite.Group()
@@ -55,6 +59,7 @@ def scape_juego(screen,clock):
     puerta_list = pygame.sprite.GroupSingle()
     arcade = Objeto(pygame.transform.scale(pygame.image.load(r"sprite juego\arcade_machine_1.png"),(125,225)).convert_alpha(),X_ARCADE,Y_ARCADE)
     puerta = Objeto(pygame.transform.scale(pygame.image.load(r"sprite juego\door.png"),(350,500)).convert_alpha(),980,180)
+    lista_image = [pygame.transform.rotozoom(pygame.image.load(r"sprite juego\key_1.png"),35,1),pygame.transform.rotozoom(pygame.image.load(r"sprite juego\key_2.png"),35,1),pygame.transform.rotozoom(pygame.image.load(r"sprite juego\key_3.png"),35,1)]
     arcade_list.add(arcade)
     puerta_list.add(puerta)
     inventario = pygame.image.load(r"sprite juego\inventory.jpg").convert_alpha()
@@ -66,7 +71,7 @@ def scape_juego(screen,clock):
     list_button.add(flecha_de)
     list_button.add(flecha_iz)
     flag_background = True
-    flag_nivel_1 = True
+    flag_nivel_1 = False
     flag_nivel_2 = False
     flag_nivel_3 = False
 
@@ -76,12 +81,19 @@ def scape_juego(screen,clock):
             screen.blit(fondo_1,(0,0))
             arcade_list.draw(screen)
             for event in pygame.event.get():
-                if event.type == pygame.QUIT:
+                if event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
                     running = False
                 if event.type == pygame.MOUSEBUTTONDOWN and arcade.rect.collidepoint(mouse_pos):
-                    if flag_nivel_1 and not flag_nivel_2 and not flag_nivel_3:                    
-                        # flag_nivel_2 = level_1(screen,clock,all_sprites_list,muro_list,objects_list,entei_list)
-                        level_2(screen,clock)
+                    if not flag_nivel_3 and flag_nivel_2:
+                        pass
+                    if not flag_nivel_2 and not flag_nivel_3 and flag_nivel_1:
+                        score_nivel_2,flag_nivel_2 = level_2(screen,clock)
+                        screen_win_lose(screen,flag_nivel_2,r"font\evil_spin\evilspinDEMO.otf","red")
+                        score_global += score_nivel_2
+                    if not flag_nivel_1:         
+                        score_nivel_1,flag_nivel_1 = level_1(screen,clock,all_sprites_list,muro_list,objects_list,entei_list,goal_list)
+                        screen_win_lose(screen,flag_nivel_1,r"font\04b_30\04B_30__.TTF","yellow")
+                        score_global += score_nivel_1
                 if event.type == pygame.MOUSEBUTTONDOWN and flecha_de.rect.collidepoint(mouse_pos):
                     flag_background = False
         else:
@@ -90,11 +102,14 @@ def scape_juego(screen,clock):
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     running = False
+                if event.type == pygame.MOUSEBUTTONDOWN and puerta.rect.collidepoint(mouse_pos):
+                    if flag_nivel_1:
+                        return score_global
                 if event.type == pygame.MOUSEBUTTONDOWN and flecha_iz.rect.collidepoint(mouse_pos):
                     flag_background = True
 
         draw_inventario(screen,1000,0,arcade.inventario,inventario)
+        draw_key(screen,1003,3,lista_image,flag_nivel_1,flag_nivel_2,flag_nivel_3)
         list_button.draw(screen)
-
         pygame.display.flip()
         clock.tick(FPS)
