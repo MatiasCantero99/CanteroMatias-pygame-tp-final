@@ -5,7 +5,7 @@ from constantes import *
 from class_disparo_plataforma import *
 
 class Personaje(pygame.sprite.Sprite):
-    def __init__(self,x,y,delay,nombre,width,height,escalar,screen):
+    def __init__(self,x,y,delay,nombre,width,height,escalar):
         super().__init__()
         self.sprite = load_sprite_sheets("", "wizard pack", width, height,escalar, True)
         self.izquierda = False
@@ -31,7 +31,6 @@ class Personaje(pygame.sprite.Sprite):
         self.saltando = False
         self.cayendo = False
         self.desplazamiento_y = 0
-        self.screen = screen
         self.movimiento = 50
         self.contador_plataformas = 0
         
@@ -39,7 +38,6 @@ class Personaje(pygame.sprite.Sprite):
         self.load_sprite()
         self.loop()
         self.aplicar_gravedad(plataforma_rectangulo)
-        self.verificar_animacion()
 
     def load_sprite(self):
         if self.izquierda:

@@ -33,7 +33,7 @@ def screen_win_lose(screen,flag,path,color):
         if flag:
             text_lives = font.render("Ganaste, toca enter para continuar", True, color)
         else:
-             text_lives = font.render("perdiste, toca enter para continuar", True, color)
+            text_lives = font.render("perdiste, toca enter para continuar", True, color)
         center = text_lives.get_rect(center=(SCREEN_WIDTH/2,SCREEN_HEIGHT/2))
         screen.blit(text_lives,center)
         for event in pygame.event.get():

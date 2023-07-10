@@ -1,5 +1,7 @@
 import pygame
 from Player_laberinto_class import Pokeball
+# La línea `from Object_laberinto_class import Object` está importando la clase `Object` del módulo
+# `Object_laberinto_class`. Esto permite que el código use la clase 'Objeto' definida en ese módulo.
 from Object_laberinto_class import Object
 from Goal_laberinto_class import Goal
 from FireBall_laberinto_class import FireBall
@@ -29,7 +31,7 @@ def level_1(screen, clock,all_sprites_list,muro_list,objects_list,entei_list,goa
     image_pikachu = pygame.transform.scale(pygame.image.load(r"sprite juego\pikachu_cara.png"),(85,55)).convert_alpha()
     image_fondo = pygame.transform.scale(pygame.image.load(r"sprite juego\fondo_poke.png"),(1280,680)).convert_alpha()
 
-    #generar_musica(r"Pokemon_sound.wav",0.2)
+    # generar_musica(r"Pokemon_sound.wav",0.2)
     running = True
     while running:
         screen.blit(image_fondo, (0,0))
@@ -37,6 +39,7 @@ def level_1(screen, clock,all_sprites_list,muro_list,objects_list,entei_list,goa
         if flag_win_lose:
             for event in pygame.event.get():
                 if pokeball.life < 1:
+                    pokeball.kill()
                     score = 0
                     return  score,False
                 elif pokeball.life >= 1:
@@ -53,6 +56,7 @@ def level_1(screen, clock,all_sprites_list,muro_list,objects_list,entei_list,goa
             pokeball.power(score)
             for event in pygame.event.get():
                 if event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
+                    pokeball.kill()
                     score = 0
                     return score,False
                 if event.type == pygame.KEYDOWN:

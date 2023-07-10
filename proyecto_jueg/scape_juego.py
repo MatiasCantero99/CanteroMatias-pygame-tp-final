@@ -4,6 +4,7 @@ from constantes import *
 from class_arcade import Objeto
 from galaga import level_2
 from laberinto_posta import level_1
+from Plataforma import level_3
 from Button_class import Button
 
 from Object_laberinto_class import Object
@@ -85,12 +86,14 @@ def scape_juego(screen,clock):
                     running = False
                 if event.type == pygame.MOUSEBUTTONDOWN and arcade.rect.collidepoint(mouse_pos):
                     if not flag_nivel_3 and flag_nivel_2:
-                        pass
+                        score_nivel_3,flag_nivel_3 = level_3(screen,clock)
+                        screen_win_lose(screen,flag_nivel_2,r"font\dominican\DOMISC__.TTF","green")
+                        score_global += score_nivel_3
                     if not flag_nivel_2 and not flag_nivel_3 and flag_nivel_1:
                         score_nivel_2,flag_nivel_2 = level_2(screen,clock)
                         screen_win_lose(screen,flag_nivel_2,r"font\evil_spin\evilspinDEMO.otf","red")
                         score_global += score_nivel_2
-                    if not flag_nivel_1:         
+                    if not flag_nivel_1:
                         score_nivel_1,flag_nivel_1 = level_1(screen,clock,all_sprites_list,muro_list,objects_list,entei_list,goal_list)
                         screen_win_lose(screen,flag_nivel_1,r"font\04b_30\04B_30__.TTF","yellow")
                         score_global += score_nivel_1

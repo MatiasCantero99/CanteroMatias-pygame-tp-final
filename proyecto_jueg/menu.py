@@ -3,7 +3,7 @@ from Button_class import Button
 from constantes import *
 from Help import help
 from scape_juego import scape_juego
-from SQLite import *
+from SQLite import mostrar_datos,save_score
 
 def menu(screen,clock):
     image_menu = pygame.transform.scale(pygame.image.load(r"sprite juego\scape_menu.png"),(1280,680)).convert_alpha()
@@ -39,12 +39,13 @@ def menu(screen,clock):
             elif event.type == pygame.MOUSEBUTTONDOWN and help_button.rect.collidepoint(mouse_pos):
                 help(screen)
             elif event.type == pygame.MOUSEBUTTONDOWN and rank_button.rect.collidepoint(mouse_pos):
-                if name != "" and score != 0:
-                    save_score(name,score)
                 mostrar_datos(screen)
-                score = 0
             elif event.type == pygame.MOUSEBUTTONDOWN and quit_button.rect.collidepoint(mouse_pos):
                 menu = False
+        if name != "" and score != 0 and score != None:
+            save_score(name,score)
+            name = ""
+            score = 0
         if name != "":
             name_button.text = name
             name_button.text_render = name_button.font.render(name, True, "black")
@@ -63,6 +64,5 @@ def menu(screen,clock):
                 button.select = False
         clock.tick(FPS)
         pygame.display.flip()
-
 
 
