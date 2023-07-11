@@ -35,7 +35,7 @@ def level_2(screen,clock):
 	fondo = pygame.image.load(r"sprite juego\fondo.jpg").convert_alpha()
 	fondo_escalar = pygame.transform.scale(fondo,(SCREEN_WIDTH,SCREEN_HEIGHT))
 	poder_aleatorio = random.randint(10,15)
-
+	generar_musica(r"sonido\galaga_tema.wav",0.2).play(0)
 	while running:
 		keys = pygame.key.get_pressed()
 		for event in pygame.event.get():
@@ -46,6 +46,7 @@ def level_2(screen,clock):
 					laser = Laser(player.rect.centerx - 5,player.rect.top -30)
 					laser_list.add(laser)
 					all_sprite_list.add(laser)
+					generar_sonido(r"sonido\laser5.ogg",0.2).play(0)
 				if event.key == pygame.K_2:
 					player.image = pygame.transform.scale(pygame.image.load(r"sprite juego\julio.png"),(90,90)).convert_alpha()
 					for enemi in enemies_list:

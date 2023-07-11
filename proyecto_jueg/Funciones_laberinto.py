@@ -69,35 +69,16 @@ def explosion(rect_x,rect_y):
         contador_animacion = 0
         loop()
 
-# def loop(nombre_animacion,animacion_delay,rect_x,rect_y,screen):
-    # flag = False
-    # if not flag:
-    #     contador_animacion = 0
-    #     flag = True
-    # sprite = load_sprite_sheets("", "sprite juego", 262, 263, 0.2, False)
-    # for i in range(len(sprite[nombre_animacion])):
-    #     rect = sprite[nombre_animacion][0].get_rect(topleft=(rect_x, rect_y))
-    #     image = sprite[nombre_animacion][0]
-    #     sprites = sprite[nombre_animacion]
-    #     # sprite_index = (contador_animacion // animacion_delay) % len(sprites)
-    #     sprite_index = contador_animacion
-    #     print(contador_animacion)
-    #     image = sprites[sprite_index]
+def generar_sonido(path: str, volumen: float):
+    '''
+    Función que se encarga de generar un sondi
+    Recibe el path en donde se encuentra ese sonido y el volumen del mismo
+    Retorna el sonido para esperar a que se ejecute
+    '''
+    sonido = pygame.mixer.Sound(path)
+    sonido.set_volume(volumen)
+    return sonido
 
-    #     # if sprite_index == 1:
-    #     #     animacion_disparo = True
-    #     #     self.contador += 1
-    #     # if self.animacion_delay >= 120:
-    #     #     if self.contador > 60:
-    #     #         self.contador_animacion = 0
-    #     #         self.contador = 0
-
-    #     screen.blit(image,rect)
-    #     contador_animacion += 1
-
-    #     rect = image.get_rect(topleft=(rect_x, rect_y))
-    #     # if contador_animacion // animacion_delay > len(sprites):
-    #     #     contador_animacion = 0
 def loop(nombre_animacion, animacion_delay, rect_x, rect_y, screen):
     sprite = load_sprite_sheets("", "sprite juego", 262, 263, 0.2, False)
     sprites = sprite[nombre_animacion]

@@ -177,6 +177,7 @@ class Personaje(pygame.sprite.Sprite):
             if self.sprite_index == 3:
                 self.nombre_animacion = "idle"
         elif self.nombre_animacion == "death":
+            generar_sonido(r"sonido\muerte_wizard.wav",0.2).play(0)
             if self.sprite_index == 6:
                 flag = True
                 self.kill()

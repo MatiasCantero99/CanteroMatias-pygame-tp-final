@@ -129,6 +129,7 @@ def level_1(screen, clock,all_sprites_list,muro_list,objects_list,entei_list,goa
                     
             entei_hit = pygame.sprite.spritecollide(pokeball,entei_list,True)
             for entei in entei_hit:
+                generar_sonido(r"sonido\captura.wav",0.2).play(0)
                 score += 1000
             Text(screen,"lives:","yellow",r"font\04b_30\04B_30__.TTF",posicion=(0,0))
             Text(screen,"score:","yellow",r"font\04b_30\04B_30__.TTF",score,posicion=(900,0))
