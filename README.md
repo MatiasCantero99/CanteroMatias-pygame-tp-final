@@ -39,3 +39,4 @@ Una vez conseguido superar los 3 niveles y tener las 3 llaves para salir por la 
 <img width="957" alt="ranking" src="https://github.com/MatiasCantero99/CanteroMatias-pygame-tp-final/assets/123910559/fdd49a52-9d57-4d27-8ced-b4b06281f979">
 
 
+

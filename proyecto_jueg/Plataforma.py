@@ -158,4 +158,3 @@ def level_3(screen,clock):
         clock.tick(FPS)
 
     pygame.quit()
-

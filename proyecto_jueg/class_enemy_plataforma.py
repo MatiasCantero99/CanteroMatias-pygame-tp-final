@@ -92,3 +92,4 @@ class Enemy(pygame.sprite.Sprite):
         self.vida -= 1
         if self.vida < 1:
             self.vivo = False
+            
