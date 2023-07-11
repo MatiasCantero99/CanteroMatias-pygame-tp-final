@@ -16,7 +16,7 @@ segundo background:
 <img width="958" alt="readme_2" src="https://github.com/MatiasCantero99/CanteroMatias-pygame-tp-final/assets/123910559/7641831b-b1a0-476b-afd1-d6362f967240">
 
  # Primer nivel:
- Superar un laberinto con una tematica pokemon, el obejito es simple, atrapa a bulbasaur y ten cuidado con los entei del camino que pueden hacerte perder alguna vida, captura los pokemones que veas en el camino, te daran buenos puntos para el final, Exitos.
+ Superar un laberinto con una tematica pokemon, el objetivo es simple, atrapa a bulbasaur y ten cuidado con los entei del camino que pueden hacerte perder alguna vida, captura los pokemones que veas en el camino, te daran buenos puntos para el final, Exitos.
 
 <img width="956" alt="readme_level_1" src="https://github.com/MatiasCantero99/CanteroMatias-pygame-tp-final/assets/123910559/9380ccf5-d143-4073-ab7e-7ccda89ec783">
 
