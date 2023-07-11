@@ -4,7 +4,7 @@ Escape Room es un juego diseñado en python con la biblioteca de pygame, echo pa
 
  # Objetivo del juego :
 
- Hay que superar tres juegos distintos donde por cada 1 conseguido vas a obtener una llave, al conseguir las tres vas a poder presionar la puerta y salir del scape como un ganador, tambien vas a poder volver para atras con un simple ESCAPE, pero ¡OJO! si haces eso perderas la partida que tengas y deberas volver de 0, te deseo buena suerte
+ Hay que superar tres juegos distintos donde por cada 1 conseguido vas a obtener una llave, para esto hace click en la maquina arcade del primer background, al conseguir las tres vas a poder presionar la puerta y salir del scape como un ganador, tambien vas a poder volver para atras con un simple ESCAPE, pero ¡OJO! si haces eso perderas la partida que tengas y deberas volver de 0, te deseo buena suerte
 
 # Imagenes:
 menu:
