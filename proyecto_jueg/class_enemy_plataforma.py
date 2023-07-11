@@ -21,8 +21,10 @@ class Enemy(pygame.sprite.Sprite):
         self.direccion = 1
         self.vida = 1
         self.vivo = True
+        self.sprite_index = 3
 
     def update(self):
+        print(self.vivo)
         self.load_sprite()
         self.loop()
         self.mover()
@@ -87,6 +89,7 @@ class Enemy(pygame.sprite.Sprite):
                 self.kill()
     
     def verifico_muerte(self):
+        print("entre")
         self.vida -= 1
         if self.vida < 1:
             self.vivo = False

@@ -8,19 +8,18 @@
         {"player":{"x": 50,"y":475,"nombre":"idle","width":231,"height":150,"escalar":1}},
         {"boss":{"x":1200,"y":348,"nombre":"idle","width":192,"height":128,"escalar":2.5,"velocidad": 0.6}},
         {"enemy":[
-            {"enemy_0":{"x":20,"y":50,"delay":10,"nombre":"flying","width":32,"height":32,"escalar":2,"velocidad":2,"posicion":false}},
-            {"enemy_1":{"x":1100,"y":100,"delay":10,"nombre":"flying","width":32,"height":32,"escalar":2,"velocidad":2,"posicion":true}},
-            {"enemy_2":{"x":50,"y":250,"delay":10,"nombre":"flying","width":32,"height":32,"escalar":2,"velocidad":2,"posicion":false}}]},
+            {"x":20,"y":50,"delay":10,"nombre":"flying","width":32,"height":32,"escalar":2,"velocidad":2,"posicion":false},
+            {"x":1100,"y":100,"delay":10,"nombre":"flying","width":32,"height":32,"escalar":2,"velocidad":2,"posicion":true},
+            {"x":50,"y":250,"delay":10,"nombre":"flying","width":32,"height":32,"escalar":2,"velocidad":2,"posicion":false}]},
         {"plataforma":[
-            {"plataforma_0":{"x":0,"y":620,"x_escalar":1280,"y_escalar":40}},
-            {"plataforma_1":{"x":400,"y":450,"x_escalar":300,"y_escalar":40}},
-            {"plataforma_2":{"x":200,"y":300,"x_escalar":300,"y_escalar":40}},
-            {"plataforma_2":{"x":500,"y":150,"x_escalar":300,"y_escalar":40}}]},
+            {"x":0,"y":620,"x_escalar":1280,"y_escalar":40},
+            {"x":400,"y":450,"x_escalar":300,"y_escalar":40},
+            {"x":200,"y":300,"x_escalar":300,"y_escalar":40},
+            {"x":500,"y":150,"x_escalar":300,"y_escalar":40}]},
         {"coin":[
-            {"coin_0":{"size_0":25,"size_1":25,"nombre":"ambar"}},
-            {"coin_1":{"size_0":25,"size_1":25,"nombre":"ruby"}},
-            {"poison":{"size_0":25,"size_1":35,"nombre":"veneno"}},
-            {"key":{"size_0":25,"size_1":35,"nombre":"key"}}]}
-        ]
-    }
-}
+            {"x":650,"y":130,"ruta": "Wizard Pack/coin/gem_amber__x1_iconic_png_1354831638.png","nombre":"ambar"},
+            {"x":700,"y":130,"ruta":"Wizard Pack/coin/gem_ruby__x1_iconic_png_1354831651.png","nombre":"ruby"},
+            {"x":250,"y":280,"ruta": "Wizard Pack/poison/poison.png","nombre":"veneno"}]}
+            ]
+            }
+        }

@@ -8,7 +8,37 @@ from class_enemy_plataforma import *
 from class_objeto_plataforma import *
 from Funciones_plataforma import *
 
+def generar_player(lista_player):
+    player = Personaje(lista_player["x"],lista_player["y"],DELAY,lista_player["nombre"],lista_player["width"],lista_player["height"],lista_player["escalar"])
+    return player
+
+def generar_boss(lista_boss):
+    boss = Boss(lista_boss["x"],lista_boss["y"],DELAY,lista_boss["nombre"],lista_boss["width"],lista_boss["height"],lista_boss["escalar"],lista_boss["velocidad"])
+    return boss
+
+def generar_enemy(lista_enemy,grupo_enemy,all_sprite):
+    for enemy in lista_enemy:
+        enemigo = Enemy(enemy["x"],enemy["y"],enemy["delay"],enemy["nombre"],enemy["width"],enemy["height"],enemy["escalar"],enemy["velocidad"],enemy["posicion"])
+        grupo_enemy.add(enemigo)
+        all_sprite.add(enemigo)
+
+def generar_plataforma(lista_plataforma,grupo_plataforma,all_sprite):
+    for plataform in lista_plataforma:
+        plataforma = Plataforma(plataform["x"],plataform["y"],plataform["x_escalar"],plataform["y_escalar"])
+        grupo_plataforma.add(plataforma)
+        all_sprite.add(plataforma)
+
+def generar_objetos(lista_objetos,grupo_objetos,all_sprite):
+    indice = 0
+    for object in lista_objetos:
+        objeto = Objeto(object["x"],object["y"],pygame.transform.scale(pygame.image.load(object["ruta"]).convert_alpha(),(25,25)),object["nombre"])
+        grupo_objetos.add(objeto)
+        all_sprite.add(objeto)
+
 def level_3(screen,clock):
+    ruta = r"proyecto_jueg\data_level.json"
+    lista_nivel = leer_archivo(ruta)
+
     image_fondo = pygame.transform.scale(pygame.image.load(r"sprite juego\background_bosque.jpg"),(1280,680)).convert_alpha()
     score = 0
     flag_termine = False
@@ -23,43 +53,14 @@ def level_3(screen,clock):
     object_coin_list = pygame.sprite.Group()
     enemy_list = pygame.sprite.Group()
 
-    player = Personaje(50,475,DELAY,"idle",231,150,1)
+    player = generar_player(lista_nivel[0]["player"])
     player_list.add(player)
-    boss = Boss(1200,348,DELAY,"idle",192,128,2.5,0.6)
+    boss = generar_boss(lista_nivel[1]["boss"])
     boss_list.add(boss)
     all_sprites_list.add(boss)
-    enemy_0 = Enemy(20,50,10,"flying",32,32,2,2,False)
-    enemy_1 = Enemy(1100,100,10,"flying",32,32,2,2,True)
-    enemy_2 = Enemy(50,250,10,"flying",32,32,2,2,False)
-    enemy_list.add(enemy_0)
-    enemy_list.add(enemy_1)
-    enemy_list.add(enemy_2)
-    all_sprites_list.add(enemy_0)
-    all_sprites_list.add(enemy_1)
-    all_sprites_list.add(enemy_2)
-
-    plataforma_0 = Plataforma(0,620,1280,40)
-    plataforma_1 = Plataforma(400,450,300,40)
-    plataforma_2 = Plataforma(200,300,300,40)
-    plataforma_3 = Plataforma(500,150,300,40)
-    plataforma_list.add(plataforma_0)
-    plataforma_list.add(plataforma_1)
-    plataforma_list.add(plataforma_2)
-    plataforma_list.add(plataforma_3)
-    all_sprites_list.add(plataforma_0)
-    all_sprites_list.add(plataforma_1)
-    all_sprites_list.add(plataforma_2)
-    all_sprites_list.add(plataforma_3)
-
-    coin_0 = Objeto(plataforma_3.rect.centerx,plataforma_3.rect.centery - 33,pygame.transform.scale(pygame.image.load(r"Wizard Pack\coin\gem_amber__x1_iconic_png_1354831638.png").convert_alpha(),(25,25)),"ambar")
-    object_coin_list.add(coin_0)
-    all_sprites_list.add(coin_0)
-    coin_1 = Objeto(plataforma_3.rect.centerx + 50,plataforma_3.rect.centery - 33,pygame.transform.scale(pygame.image.load(r"Wizard Pack\coin\gem_ruby__x1_iconic_png_1354831651.png").convert_alpha(),(25,25)),"ruby")
-    object_coin_list.add(coin_1)
-    all_sprites_list.add(coin_1)
-    poison = Objeto(plataforma_2.rect.centerx - 50,plataforma_2.rect.centery - 33,pygame.transform.scale(pygame.image.load(r"Wizard Pack\poison\poison.png").convert_alpha(),(25,35)),"veneno")
-    all_sprites_list.add(poison)
-    object_coin_list.add(poison)
+    generar_enemy(lista_nivel[2]["enemy"],enemy_list,all_sprites_list)
+    generar_plataforma(lista_nivel[3]["plataforma"],plataforma_list,all_sprites_list)
+    generar_objetos(lista_nivel[4]["coin"],object_coin_list,all_sprites_list)
     key = Objeto(1050,600,pygame.transform.scale(pygame.image.load(r"Wizard Pack\coin\key_0.png").convert_alpha(),(25,35)),"key")
     object_coin_list.add(key)
     image_escudo = pygame.transform.scale(pygame.image.load(r"sprite juego\escudo.png"),(310,310)).convert_alpha()

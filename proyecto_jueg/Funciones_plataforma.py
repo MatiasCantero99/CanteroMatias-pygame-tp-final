@@ -1,5 +1,6 @@
 import pygame
 from constantes import *
+import json
 
 
 
@@ -38,3 +39,10 @@ def generar_rects(principal,para):
 
     # diccionario["righ"] = pygame.Rect(principal.right -2, principal.top, 2,principal.height)
     return diccionario
+
+def leer_archivo(archivo_json:str) -> list:
+    lista_nivel = []
+    with open(archivo_json,"r") as archivo:
+        diccionario = json.load(archivo)
+        lista_nivel = diccionario["niveles"]["level_3"]
+    return lista_nivel
