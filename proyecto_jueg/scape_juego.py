@@ -18,7 +18,7 @@ def generar_laberinto_thread(screen,muro_list,all_sprites_list,entei_list,object
 
 
 def generar_laberinto(screen,muro_list,all_sprites_list,entei_list,objects_list,goal_list):
-    game_map = load_map(r"game_map.txt")
+    game_map = load_map(r"proyecto_jueg\game_map.txt")
     cell_size = 40
     for row in range(len(game_map)):
             for col in range(len(game_map[row])):
@@ -52,6 +52,7 @@ def scape_juego(screen,clock):
     laberinto_thread = threading.Thread(target=generar_laberinto_thread, args=(screen, muro_list, all_sprites_list, entei_list, objects_list,goal_list))
     laberinto_thread.start()
     #termina de formarse el laberinto
+    screen_comienzo_juego(screen)
 
     running = True
     fondo_1 = pygame.transform.scale(pygame.image.load(r"sprite juego\background_scape.jpg"),(1280,680)).convert_alpha()
@@ -87,7 +88,7 @@ def scape_juego(screen,clock):
                 if event.type == pygame.MOUSEBUTTONDOWN and arcade.rect.collidepoint(mouse_pos):
                     if not flag_nivel_3 and flag_nivel_2:
                         score_nivel_3,flag_nivel_3 = level_3(screen,clock)
-                        screen_win_lose(screen,flag_nivel_2,r"font\dominican\DOMISC__.TTF","green")
+                        screen_win_lose(screen,flag_nivel_3,r"font\dominican\DOMISC__.TTF","green")
                         score_global += score_nivel_3
                     if not flag_nivel_2 and not flag_nivel_3 and flag_nivel_1:
                         score_nivel_2,flag_nivel_2 = level_2(screen,clock)
@@ -98,6 +99,7 @@ def scape_juego(screen,clock):
                         # score_nivel_1,flag_nivel_1 = level_1(screen,clock,all_sprites_list,muro_list,objects_list,entei_list,goal_list)
                         screen_win_lose(screen,flag_nivel_1,r"font\04b_30\04B_30__.TTF","yellow")
                         score_global += score_nivel_1
+                        pygame.mixer.music.stop()
                 if event.type == pygame.MOUSEBUTTONDOWN and flecha_de.rect.collidepoint(mouse_pos):
                     flag_background = False
         else:

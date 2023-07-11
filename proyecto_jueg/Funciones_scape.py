@@ -45,3 +45,15 @@ def draw_text(texto,screen,posicion,tamaño,color):
     font = pygame.font.SysFont("Arial Narrow",tamaño)
     text = font.render(texto, True, color)
     screen.blit(text,posicion)
+
+def screen_comienzo_juego(screen):
+    image = pygame.image.load(r"sprite juego\ingreso_scape.jpg")
+    running = True
+    while running:
+        screen.blit(image,(0,0))
+        for event in pygame.event.get():
+             if event.type == pygame.KEYDOWN and event.key == pygame.K_RETURN:
+                    running = False
+        pygame.display.flip()
+
+         

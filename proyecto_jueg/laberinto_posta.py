@@ -31,7 +31,7 @@ def level_1(screen, clock,all_sprites_list,muro_list,objects_list,entei_list,goa
     image_pikachu = pygame.transform.scale(pygame.image.load(r"sprite juego\pikachu_cara.png"),(85,55)).convert_alpha()
     image_fondo = pygame.transform.scale(pygame.image.load(r"sprite juego\fondo_poke.png"),(1280,680)).convert_alpha()
 
-    # generar_musica(r"Pokemon_sound.wav",0.2)
+    generar_musica(r"sonido\Pokemon_sound.wav",0.2)
     running = True
     while running:
         screen.blit(image_fondo, (0,0))

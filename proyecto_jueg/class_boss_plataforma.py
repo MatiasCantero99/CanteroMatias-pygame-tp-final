@@ -82,6 +82,7 @@ class Boss(pygame.sprite.Sprite):
 
     def muerte(self):
         if not self.vivo:
+            generar_sonido(r"sonido\muerte_boss.wav",0.2).play(0)
             self.animacion_delay = 15
             self.nombre_animacion = "death"
             if self.sprite_index == 15:

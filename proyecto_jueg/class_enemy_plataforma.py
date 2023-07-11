@@ -24,7 +24,6 @@ class Enemy(pygame.sprite.Sprite):
         self.sprite_index = 3
 
     def update(self):
-        print(self.vivo)
         self.load_sprite()
         self.loop()
         self.mover()
@@ -83,13 +82,13 @@ class Enemy(pygame.sprite.Sprite):
     
     def muerte(self):
         if not self.vivo:
+            generar_sonido(r"sonido\muerte_bicho.wav",0.2).play(0)
             self.nombre_animacion = "death"
             self.y += 2
             if self.sprite_index == 9:
                 self.kill()
     
     def verifico_muerte(self):
-        print("entre")
         self.vida -= 1
         if self.vida < 1:
             self.vivo = False

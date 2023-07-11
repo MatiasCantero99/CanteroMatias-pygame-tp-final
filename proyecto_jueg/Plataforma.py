@@ -64,6 +64,7 @@ def level_3(screen,clock):
     key = Objeto(1050,600,pygame.transform.scale(pygame.image.load(r"Wizard Pack\coin\key_0.png").convert_alpha(),(25,35)),"key")
     object_coin_list.add(key)
     image_escudo = pygame.transform.scale(pygame.image.load(r"sprite juego\escudo.png"),(310,310)).convert_alpha()
+    generar_musica(r"sonido\level_3_tema.wav",0.1)
     running = True
     while running:
         screen.blit(image_fondo,(0,0))
@@ -99,6 +100,7 @@ def level_3(screen,clock):
         if player.ataque:
             disparo = player.disparo()
             if disparo != None:
+                generar_sonido(r"sonido\disparo_mago.wav",0.1).play(0)
                 all_sprites_list.add(disparo)
                 player_disparo_list.add(disparo)
 
